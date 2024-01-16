@@ -221,12 +221,17 @@
           <template #default="scope">
             <slot v-bind="scope" />
           </template>
-          <template #empty>
-            <slot name="empty">
-              <p :class="nsSelect.be('dropdown', 'empty')">
-                {{ emptyText ? emptyText : '' }}
-              </p>
-            </slot>
+          <template v-if="$slots.loading && loading" #loading>
+            <div :class="nsSelect.be('dropdown', 'loading')">
+              <slot name="loading" />
+            </div>
+          </template>
+          <template v-else-if="loading || filteredOptions.length === 0" #empty>
+            <div :class="nsSelect.be('dropdown', 'empty')">
+              <slot name="empty">
+                <span>{{ emptyText }}</span>
+              </slot>
+            </div>
           </template>
         </el-select-menu>
       </template>
@@ -246,6 +251,7 @@ import ElSelectMenu from './select-dropdown'
 import useSelect from './useSelect'
 import { SelectProps } from './defaults'
 import { selectV2InjectionKey } from './token'
+
 export default defineComponent({
   name: 'ElSelectV2',
   components: {
