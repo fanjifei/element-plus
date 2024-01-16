@@ -75,7 +75,7 @@ const renderContent = (
     {
       class: 'custom-tree-node',
     },
-    h('span', null, node.label),
+    h('input', null, node.label),
     h(
       'span',
       null,
